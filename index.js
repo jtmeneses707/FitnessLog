@@ -6,6 +6,7 @@ const GoogleStrategy = require('passport-google-oauth20');
 
 
 
+
 // Google login credentials, used when the user contacts
 // Google, to tell them where he is trying to login to, and show
 // that this domain is registered for this service. 
