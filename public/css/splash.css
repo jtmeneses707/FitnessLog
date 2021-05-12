@@ -1,3 +1,7 @@
+html, body, main {
+  height: 100%;
+}
+
 .tileContainer {
     display: flex;
     flex-direction: row;
