@@ -44,8 +44,8 @@ strong {
 }
 
 .blackTile > h1 {
-  margin-top: 100px;
-  margin-bottom: 100px;
+  margin-top: 150px;
+  margin-bottom: 150px;
 }
 
 .whiteTile {
@@ -81,11 +81,66 @@ strong {
   text-align: justify;
   /* text-justify: distribute; */
   font-size: 1.5rem;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   margin-left: auto;
   margin-right: auto;
   width: 450px;
 }
+
+
+.logInButton {
+  display: block;
+  height: 46px;
+}
+
+label {
+  color: #ffffff;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+button {
+  height: 46px;
+}
+
+.signInButton > img {
+  vertical-align: text-top;
+}
+
+.signInButton > a {
+  width: 100px;
+}
+
+.login {
+  width: 240px;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 4px;
+}
+
+.login > img {
+  margin-right: 16px;
+}
+
+.login > a {
+  text-decoration: none;
+  color: #808080;
+}
+
+
+/* .login > a {
+  height: 46px;
+  margin-top: -5px;
+  margin-bottom: 10px;
+  width: 30px;
+  text-decoration: none;
+} */
+
+/* a {
+  height: 46px;
+} */
 
 
 /* .buttonContainer {
