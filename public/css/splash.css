@@ -1,4 +1,3 @@
-
 .tileContainer {
     display: flex;
     flex-direction: row;
@@ -19,6 +18,14 @@
 
 .tile > h1, .tile > strong {
   text-align: center;
+}
+
+.whiteTile {
+    background-color: #fff;
+}
+
+.blackTile {
+    background-color: #333333;
 }
 
 
