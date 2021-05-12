@@ -112,7 +112,7 @@ app.get('/auth/accepted',
     function (req, res) {
         console.log('Logged in and using cookies!')
         // tell browser to get the hidden main page of the app
-        res.redirect('/hello.html');
+        res.redirect('/index.html');
     });
 
 // static files in /user are only available after login
