@@ -15,6 +15,9 @@ const db = require('./user/js/sqlWrap');
 // functions that verify activities before putting them in db
 const act = require('./user/js/activity');
 
+// object that provides interface for express
+const app = express();
+
 // use this instead of the older body-parser
 app.use(express.json());
 
