@@ -2,6 +2,19 @@ html, body, main {
   height: 100%;
 }
 
+body {
+  font-family: "Open Sans", sans-serif;
+  background-color: #f2f2f2;
+  min-width: 350px;
+}
+
+strong {
+  font-weight: bold;
+  color: #53e0cd;
+}
+
+
+/* Tile Container and Tile styling*/
 .tileContainer {
     display: flex;
     flex-direction: row;
@@ -17,19 +30,61 @@ html, body, main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    /* max-width: 1220px;; */
     /* align-content: center; */
 }
 
-.tile > h1, .tile > strong {
+/* .tile > h1, .tile > strong {
   text-align: center;
+} */
+
+.tile h1 {
+  font-size: 1.8rem;
+}
+
+.blackTile > h1 {
+  margin-top: 100px;
+  margin-bottom: 100px;
 }
 
 .whiteTile {
     background-color: #fff;
+
 }
 
 .blackTile {
     background-color: #333333;
+}
+
+
+/* Image Styling */
+
+.imgContainer > img {
+  width: 100%;
+}
+
+.logoContainer {
+  width: 500px;
+  margin-top: 60px;
+  /* width: 80%; */
+  /* margin-left: auto;
+  margin-right: auto; */
+}
+
+.welcomeContainer {
+  width: 300px;
+}
+
+.logoContainer> h1 {
+  /* text-align: center; */
+  text-align: justify;
+  /* text-justify: distribute; */
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: 450px;
 }
 
 
