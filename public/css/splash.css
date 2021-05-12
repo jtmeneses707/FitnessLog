@@ -1,0 +1,10 @@
+.tileContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.tile {
+    width: 50%;
+    margin: auto;
+    justify-content: center;
+}
