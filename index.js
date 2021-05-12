@@ -15,12 +15,6 @@ const db = require('./user/js/sqlWrap');
 // functions that verify activities before putting them in db
 const act = require('./user/js/activity');
 
-// object that provides interface for express
-const app = express();
-
-// use this instead of the older body-parser
-app.use(express.json());
-
 // Google login credentials, used when the user contacts
 // Google, to tell them where he is trying to login to, and show
 // that this domain is registered for this service. 
@@ -54,6 +48,9 @@ passport.use(new GoogleStrategy(googleLoginData, gotProfile));
 
 // app is the object that implements the express server
 const app = express();
+
+// use this instead of the older body-parser
+app.use(express.json());
 
 // pipeline stage that just echos url, for debugging
 app.use('/', printURL);
