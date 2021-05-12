@@ -35,17 +35,14 @@ strong {
     /* align-content: center; */
 }
 
-/* .tile > h1, .tile > strong {
-  text-align: center;
-} */
 
 .tile h1 {
   font-size: 1.8rem;
 }
 
 .blackTile > h1 {
-  margin-top: 150px;
-  margin-bottom: 150px;
+  margin-top: 110px;
+  margin-bottom: 110px;
 }
 
 .whiteTile {
@@ -58,7 +55,7 @@ strong {
 }
 
 
-/* Image Styling */
+/* Image Styling and container Styling*/
 
 .imgContainer > img {
   width: 100%;
@@ -66,20 +63,14 @@ strong {
 
 .logoContainer {
   width: 500px;
-  margin-top: 60px;
+  /* margin-top: 60px; */
   /* width: 80%; */
   /* margin-left: auto;
   margin-right: auto; */
 }
 
-.welcomeContainer {
-  width: 300px;
-}
-
 .logoContainer> h1 {
-  /* text-align: center; */
   text-align: justify;
-  /* text-justify: distribute; */
   font-size: 1.5rem;
   margin-top: 1.5rem;
   margin-left: auto;
@@ -87,11 +78,11 @@ strong {
   width: 450px;
 }
 
-
-.logInButton {
-  display: block;
-  height: 46px;
+.welcomeContainer {
+  width: 300px;
 }
+
+
 
 label {
   color: #ffffff;
@@ -99,17 +90,7 @@ label {
   margin-bottom: 10px;
 }
 
-button {
-  height: 46px;
-}
-
-.signInButton > img {
-  vertical-align: text-top;
-}
-
-.signInButton > a {
-  width: 100px;
-}
+/* Styling for Google Sign In button */
 
 .login {
   width: 240px;
@@ -146,3 +127,50 @@ button {
 /* .buttonContainer {
   width: 80px;
 } */
+
+/* Small desktop screen */
+@media screen and (max-width: 1024px) {
+  /* .imgContainer {
+    width: 350px;
+  } */
+
+  .logoContainer {
+    width: 325px;
+  }
+
+  .logoContainer > h1 {
+    font-size: 1rem;
+    width: 325px;
+  }
+
+  .blackTile > h1 {
+    font-size: 1.5rem;
+  }
+
+  
+  
+  
+
+}
+
+
+/* Mobile/ Tablet styling */
+@media screen and (max-width: 768px) {
+  .tileContainer {
+    flex-direction: column;
+  }
+  .tile {
+    width: 100%;
+  }
+  .blackTile {
+    height: 60%;
+  }
+  .whiteTile {
+    height: 40%;
+  }
+
+  .welcomeContainer {
+    width: 250px;
+  }
+
+}
