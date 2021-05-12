@@ -1,0 +1,153 @@
+html, body, main {
+  height: 100%;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  background-color: #f2f2f2;
+  min-width: 350px;
+}
+
+strong {
+  font-weight: bold;
+  color: #53e0cd;
+}
+
+
+/* Tile Container and Tile styling*/
+.tileContainer {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.tile {
+    width: 50%;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+.tile h1 {
+  font-size: 1.8rem;
+}
+
+.blackTile > h1 {
+  margin-top: 110px;
+  margin-bottom: 110px;
+}
+
+.whiteTile {
+    background-color: #fff;
+
+}
+
+.blackTile {
+    background-color: #333333;
+}
+
+
+/* Image Styling and container Styling*/
+
+.imgContainer > img {
+  width: 100%;
+}
+
+.logoContainer {
+  width: 500px;
+}
+
+.logoContainer> h1 {
+  text-align: justify;
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: 450px;
+}
+
+.welcomeContainer {
+  width: 300px;
+}
+
+
+
+label {
+  color: #ffffff;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+/* Styling for Google Sign In button */
+
+.login {
+  width: 240px;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 4px;
+}
+
+.login > img {
+  margin-right: 16px;
+}
+
+.login > a {
+  text-decoration: none;
+  color: #808080;
+}
+
+
+/* Small desktop screen */
+@media screen and (max-width: 1024px) {
+  /* .imgContainer {
+    width: 350px;
+  } */
+
+  .logoContainer {
+    width: 325px;
+  }
+
+  .logoContainer > h1 {
+    font-size: 1rem;
+    width: 325px;
+  }
+
+  .blackTile > h1 {
+    font-size: 1.5rem;
+  }
+
+  
+  
+  
+
+}
+
+
+/* Mobile/ Tablet styling */
+@media screen and (max-width: 768px) {
+  .tileContainer {
+    flex-direction: column;
+  }
+  .tile {
+    width: 100%;
+  }
+  .blackTile {
+    height: 60%;
+  }
+  .whiteTile {
+    height: 40%;
+  }
+
+  .welcomeContainer {
+    width: 250px;
+  }
+
+}

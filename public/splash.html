@@ -1,27 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Splash page</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Splash page</title>
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@1,700;1,800&display=swap" rel="stylesheet">
-    <link href="./reset.css" rel="stylesheet" type="text/css" />
-    <link href="./demo.css" rel="stylesheet" type="text/css" />
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@1,700;1,800&display=swap" rel="stylesheet">
+	<link href="./reset.css" rel="stylesheet" type="text/css" />
+	<link href="./css/splash.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
-  <header>
-    <h1>Welcome to the login demo.</h1>
-  </header>
-  <main>
-    This app lets you login with Google, and then see a page that is otherwise hidden. This is the "splash page", where the user comes when first visiting. 
-    To examine this demo, fork it and add your Google Client ID and Client Secret with the "lock" icon on the right in Replit.
 
-<a href="auth/google">
+<body>
+	<main>
+		<div class="tileContainer">
+			<div class="tile whiteTile">
+				<div class="imgContainer logoContainer">
+					<img src="./images/header_image.png" alt="">
+              <h1>Start your fitness journey today and <br> get ready to track your fitness activity.</h1>
+              <!-- <h1>Start your fitness journey today and </h1>
+              <h1>get ready to track your fitness activity.</h1> -->
+              <!-- <p>Start your fitness hourney today and <br> 
+              get ready to track your fitness activity.</p> -->
+            </div>
+            
+        </div>
+        <div class="tile blackTile">
+            <div class="imgContainer welcomeContainer">
+              <img src="./images/tractivity-logo-white.png" alt="">
+            </div>
+            <h1><strong> Welcome to Tractivity!</strong></h1>
+
+            <label>Log in/register</label>
+            <div class="login">
+              <img src="./images/btn_google_dark_normal_ios.svg" alt="">
+                <a href="auth/google" id = "login" >Sign in with Google</a>
+            </div>
+            </div>
+            
+        </div>
+    </div>
+    
+  </main>
+
+<!-- <a href="auth/google">
   <button>Start Login!</button>
-</a>
+</a> -->
 
   </main>
 </body>
