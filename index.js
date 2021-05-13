@@ -272,7 +272,7 @@ function isAuthenticated(req, res, next) {
 // function called during login, the second time passport.authenticate
 // is called (in /auth/redirect/),
 // once we actually have the profile data from Google. 
-function gotProfile(accessToken, refreshToken, profile, done) {
+async function gotProfile(accessToken, refreshToken, profile, done) {
     console.log("Google profile has arrived", profile);
     // here is a good place to check if user is in DB,
     // and to store him in DB if not already there. 
@@ -280,6 +280,12 @@ function gotProfile(accessToken, refreshToken, profile, done) {
     // should be key to get user out of database.
 
     let userid = profile.id;
+    // Get first name from data given by google.
+    let firstName = profile.name.givenName;
+    console.log("First name is: "+  firstName);
+
+    // Check and insert if user not in DB already
+    await dbo.insertUser(userid, firstName);
 
     done(null, userid);
 }

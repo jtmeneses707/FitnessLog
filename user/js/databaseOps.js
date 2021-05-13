@@ -12,7 +12,8 @@ module.exports = {
   delete_past_activities_in_range: delete_past_activities_in_range,
   get_most_recent_entry: get_most_recent_entry,
   get_similar_activities_in_range: get_similar_activities_in_range,
-  get_all: get_all
+  get_all: get_all, 
+  insertUser: insertUser
 }
 
 // using a Promises-wrapped version of sqlite3
