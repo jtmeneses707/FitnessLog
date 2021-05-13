@@ -25,13 +25,13 @@ const db = require('./sqlWrap');
 const act = require('./activity');
 
 // SQL commands for ActivityTable
-const insertDB = "insert into ActivityTable (activity, date, amount) values (?,?,?)"
-const getOneDB = "select * from ActivityTable where activity = ? and date = ?";
+const insertDB = "insert into ActivityTable (activity, date, amount, userID) values (?,?,?,?)"
+const getOneDB = "select * from ActivityTable where activity = ? and date = ? and userID=?";
 const allDB = "select * from ActivityTable where activity = ?";
-const deletePrevPlannedDB = "DELETE FROM ActivityTable WHERE amount < 0 and date BETWEEN ? and ?";
-const getMostRecentPrevPlannedDB = "SELECT rowIdNum, activity, MAX(date), amount FROM ActivityTable WHERE amount <= 0 and date BETWEEN ? and ?";
-const getMostRecentDB = "SELECT MAX(rowIdNum), activity, date, amount FROM ActivityTable";
-const getPastWeekByActivityDB = "SELECT * FROM ActivityTable WHERE activity = ? and date BETWEEN ? and ? ORDER BY date ASC";
+const deletePrevPlannedDB = "DELETE FROM ActivityTable WHERE amount < 0 and date BETWEEN ? and ? AND userID = ?";
+const getMostRecentPrevPlannedDB = "SELECT rowIdNum, activity, MAX(date), amount FROM ActivityTable WHERE amount <= 0 and date BETWEEN ? and ? and userID = ?";
+const getMostRecentDB = "SELECT MAX(rowIdNum), activity, date, amount FROM ActivityTable WHERE userID = ?";
+const getPastWeekByActivityDB = "SELECT * FROM ActivityTable WHERE activity = ? and date BETWEEN ? and ? and userID = ? ORDER BY date ASC";
 const insertUserCMD = "INSERT OR IGNORE into UserTable (userId, firstName) values (?,?)";
 const getOneUser = "SELECT * from UserTable WHERE userId = ?";
 
@@ -161,10 +161,13 @@ async function getAllUser() {
  * @param {string} activity.activity - type of activity
  * @param {number} activity.date - ms since 1970
  * @param {float} activity.scalar - measure of activity conducted
+ * @param {string} userID - id provided by google
  */
-async function post_activity(activity) {
+async function post_activity(activity, userID) {
+  let data = act.ActivityToList(activity);
+  data.push(userID);
   try {
-    await db.run(insertDB, act.ActivityToList(activity));
+    await db.run(insertDB, data);
   } catch (error) {
     console.log("error", error)
   }
@@ -176,14 +179,15 @@ async function post_activity(activity) {
  * date range
  * @param {number} min - ms since 1970
  * @param {number} max - ms since 1970
+ * @param {string} userID 
  * @returns {Activity} activity 
  * @returns {string} activity.activity - type of activity
  * @returns {number} activity.date - ms since 1970
  * @returns {float} activity.scalar - measure of activity conducted
  */
-async function get_most_recent_planned_activity_in_range(min, max) {
+async function get_most_recent_planned_activity_in_range(min, max, userID) {
   try {
-    let results = await db.get(getMostRecentPrevPlannedDB, [min, max]);
+    let results = await db.get(getMostRecentPrevPlannedDB, [min, max, userID]);
     return (results.rowIdNum != null) ? results : null;
   }
   catch (error) {
@@ -196,14 +200,15 @@ async function get_most_recent_planned_activity_in_range(min, max) {
 
 /**
  * Get the most recently inserted activity in the database
+ * @param {string} userID - userID provided by google
  * @returns {Activity} activity 
  * @returns {string} activity.activity - type of activity
  * @returns {number} activity.date - ms since 1970
  * @returns {float} activity.scalar - measure of activity conducted
  */
-async function get_most_recent_entry() {
+async function get_most_recent_entry(userID) {
   try {
-    let result = await db.get(getMostRecentDB, []);
+    let result = await db.get(getMostRecentDB, [userID]);
     return (result['MAX(rowIdNum)'] != null) ? result : null;
   }
   catch (error) {
@@ -219,11 +224,12 @@ async function get_most_recent_entry() {
  * @param {string} activityType - type of activity
  * @param {number} min - ms since 1970
  * @param {number} max - ms since 1970
+ * @param {string} userID
  * @returns {Array.<Activity>} similar activities
  */
-async function get_similar_activities_in_range(activityType, min, max) {
+async function get_similar_activities_in_range(activityType, min, max, userID) {
   try {
-    let results = await db.all(getPastWeekByActivityDB, [activityType, min, max]);
+    let results = await db.all(getPastWeekByActivityDB, [activityType, min, max, userID]);
     return results;
   }
   catch (error) {
@@ -238,10 +244,11 @@ async function get_similar_activities_in_range(activityType, min, max) {
  * min and max date range
  * @param {number} min - ms since 1970
  * @param {number} max - ms since 1970
+ * @param {string} userID 
  */
-async function delete_past_activities_in_range(min, max) {
+async function delete_past_activities_in_range(min, max, userID) {
   try {
-    await db.run(deletePrevPlannedDB, [min, max]);
+    await db.run(deletePrevPlannedDB, [min, max, userID]);
   }
   catch (error) {
     console.log(error);
