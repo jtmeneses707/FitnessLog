@@ -24,6 +24,17 @@ nav {
   color: white;
   font-weight: 600;
   font-size: 1.7rem;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+nav > a {
+  color: white;
+  font-weight: 600;
+  font-size: 1.7rem;
+  text-decoration: none;
+  margin-right: 140px;
 }
 
 header {

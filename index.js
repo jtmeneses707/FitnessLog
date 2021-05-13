@@ -207,8 +207,26 @@ app.get('/week', isAuthenticated, async function (request, response, next) {
 });
 
 
+// Server responds to get req for first name.
+// Able to access data inside of req.user, which is set by deserializeUser. 
+// Sends a json obj of just the username. 
+app.get('/name', isAuthenticated, function(req, res, next){
+  console.log("Server received req for name at", req.url);
+  console.log("Name is", req.user.firstName);
+  res.json({userName: req.user.firstName});
+});
 
 
+// Server responds to logout request.
+app.get('/logout', isAuthenticated, function (req, res, next) {
+    console.log("Server received log out request at", req.url);
+    req.logout();
+    res.redirect('/');
+});
+
+
+
+// Example for query code.
 // next, put all queries (like store or reminder ... notice the isAuthenticated 
 // middleware function; queries are only handled if the user is logged in
 app.get('/query', isAuthenticated,
@@ -250,6 +268,8 @@ function isAuthenticated(req, res, next) {
         // user field is filled in in request object
         // so user must be logged in! 
         console.log("user", req.user, "is logged in");
+        // let d = req.user;
+        // console.log(d.firstName);
         next();
     } else {
         res.redirect('/splash.html');  // send response telling
@@ -265,7 +285,7 @@ function isAuthenticated(req, res, next) {
 // function called during login, the second time passport.authenticate
 // is called (in /auth/redirect/),
 // once we actually have the profile data from Google. 
-function gotProfile(accessToken, refreshToken, profile, done) {
+async function gotProfile(accessToken, refreshToken, profile, done) {
     console.log("Google profile has arrived", profile);
     // here is a good place to check if user is in DB,
     // and to store him in DB if not already there. 
@@ -273,6 +293,13 @@ function gotProfile(accessToken, refreshToken, profile, done) {
     // should be key to get user out of database.
 
     let userid = profile.id;
+    // Get first name from data given by google.
+    let firstName = profile.name.givenName;
+    console.log("First name is: "+  firstName);
+    userid = parseInt(userid);
+
+    // Check and insert if user not in DB already
+    await dbo.insertUser(userid, firstName);
 
     done(null, userid);
 }
@@ -290,12 +317,20 @@ passport.serializeUser((userid, done) => {
 // Where we should lookup user database info. 
 // Whatever we pass in the "done" callback becomes req.user
 // and can be used by subsequent middleware.
-passport.deserializeUser((userid, done) => {
+passport.deserializeUser(async (userid, done) => {
     console.log("deserializeUser. Input is:", userid);
+    // let userData = await dbo.getUser(userid)
+    let userData = await dbo.getUser(userid);
+
+    // Code for debugging and seeing all users in DB.
+    // let allUsers = await dbo.getAllUser();
+    // console.log("All users, ", allUsers);
+
+
     // here is a good place to look up user data in database using
     // dbRowID. Put whatever you want into an object. It ends up
     // as the property "user" of the "req" object. 
-    let userData = { userData: "data from user's db row goes here" };
+    // let userData = { userData: "data from user's db row goes here" };
     done(null, userData);
 });
 

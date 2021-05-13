@@ -12,7 +12,10 @@ module.exports = {
   delete_past_activities_in_range: delete_past_activities_in_range,
   get_most_recent_entry: get_most_recent_entry,
   get_similar_activities_in_range: get_similar_activities_in_range,
-  get_all: get_all
+  get_all: get_all, 
+  insertUser: insertUser, 
+  getUser: getUser, 
+  getAllUser: getAllUser
 }
 
 // using a Promises-wrapped version of sqlite3
@@ -29,6 +32,9 @@ const deletePrevPlannedDB = "DELETE FROM ActivityTable WHERE amount < 0 and date
 const getMostRecentPrevPlannedDB = "SELECT rowIdNum, activity, MAX(date), amount FROM ActivityTable WHERE amount <= 0 and date BETWEEN ? and ?";
 const getMostRecentDB = "SELECT MAX(rowIdNum), activity, date, amount FROM ActivityTable";
 const getPastWeekByActivityDB = "SELECT * FROM ActivityTable WHERE activity = ? and date BETWEEN ? and ? ORDER BY date ASC";
+const insertUserCMD = "INSERT OR IGNORE into UserTable (userId, firstName) values (?,?)";
+const getOneUser = "SELECT * from UserTable WHERE userId = ?";
+
 
 // Testing function loads some data into DB. 
 // Is called when app starts up to put fake 
@@ -109,6 +115,44 @@ async function testDB () {
   // get multiple items as a list
   result = await db.all(allDB,["walk"]);
   console.log("sample multiple db result",result);
+}
+
+/**
+ * Inserts User info into profiles table.
+ * @param {userID} id
+ * @param {string} firstName
+ */
+async function insertUser(userId, firstName) {
+  try {
+    await db.run(insertUserCMD, [userId, firstName]);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+/**
+ * Gets one user with the corresponding userId
+ * @param {userId} id
+ * @return {JSON} userData
+ */
+async function getUser(userId) {
+  try {
+    let user = await db.all(getOneUser, [userId]);
+    return (user[0] != null) ? user[0]:null;
+
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+}
+
+async function getAllUser() {
+  try {
+    let data = await db.all("SELECT * from UserTable", []);
+    return data;
+  } catch(err) {
+    console.log(err);
+  }
 }
 
 /**
