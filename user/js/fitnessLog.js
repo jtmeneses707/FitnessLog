@@ -30,6 +30,17 @@ submit_past_activity_button.addEventListener("click", submit_past_activity_oncli
 let submit_future_activity_button = document.getElementById("submitFutureActivityButton")
 submit_future_activity_button.addEventListener("click", submit_future_activity_onclick)
 
+/* Get and change username. */
+updateUserName();
+
+async function updateUserName() {
+  let userdata = await fetch('/name');
+  userdata = await userdata.json();
+  console.log("User data received is:", userdata);
+  let username = document.getElementById("username");
+  username.textContent = userdata.userName;
+}
+
 
 /**
  * ONCLICK - Hide 'Add New Activity' Button under the Past Section and Show

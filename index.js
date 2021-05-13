@@ -209,10 +209,11 @@ app.get('/week', isAuthenticated, async function (request, response, next) {
 
 // Server responds to get req for first name.
 // Able to access data inside of req.user, which is set by deserializeUser. 
+// Sends a json obj of just the username. 
 app.get('/name', isAuthenticated, function(req, res, next){
   console.log("Server received req for name at", req.url);
   console.log("Name is", req.user.firstName);
-  res.send(req.user.firstName);
+  res.json({userName: req.user.firstName});
 });
 
 
