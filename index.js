@@ -296,7 +296,7 @@ async function gotProfile(accessToken, refreshToken, profile, done) {
     // Get first name from data given by google.
     let firstName = profile.name.givenName;
     console.log("First name is: "+  firstName);
-    userid = parseInt(userid);
+    // userid = parseInt(userid);
 
     // Check and insert if user not in DB already
     await dbo.insertUser(userid, firstName);
