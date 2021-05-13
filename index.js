@@ -207,10 +207,10 @@ app.get('/week', isAuthenticated, async function (request, response, next) {
 });
 
 // Server responds to logout request.
-app.get('/logout', isAuthenticated, function(req, res, next) {
-  console.log("Server received log out request at", req.url);
-  req.logout();
-  res.redirect('/');
+app.get('/logout', isAuthenticated, function (req, res, next) {
+    console.log("Server received log out request at", req.url);
+    req.logout();
+    res.redirect('/');
 });
 
 
