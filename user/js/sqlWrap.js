@@ -10,23 +10,47 @@ const util = require('util');
 // new database. 
 const db = new sql.Database("activities.db");
 
-// check if database exists
-let cmd = " SELECT name FROM sqlite_master WHERE type='table' AND name='ActivityTable' ";
-
-db.get(cmd, function (err, val) {
+// check if activity table exists
+let cmdAct = " SELECT name FROM sqlite_master WHERE type='table' AND name='ActivityTable' ";
+db.get(cmdAct, function (err, val) {
   if (val == undefined) {
-        console.log("No database file - creating one");
+        console.log("No activity table - creating one");
         createActivityTable();
   } else {
-        console.log("Database file found");
+        console.log("Activity table found");
   }
 });
 
-// called to create table if needed
+// check if user table exists
+let cmdUser = "SELECT name FROM sqlite_master WHERE type='table' AND name='UserTable'";
+db.get(cmdUser, function (err, val) {
+  if (val == undefined) {
+        console.log("No user profile table - creating one");
+        createUserTable();
+  } else {
+        console.log("User profile table found");
+  }
+});
+
+// called to create activity table if needed
 function createActivityTable() {
   // explicitly declaring the rowIdNum protects rowids from changing if the 
   // table is compacted; not an issue here, but good practice
   const cmd = 'CREATE TABLE ActivityTable (rowIdNum INTEGER PRIMARY KEY, activity TEXT, date INTEGER, amount FLOAT)';
+  db.run(cmd, function(err, val) {
+    if (err) {
+      console.log("Database creation failure",err.message);
+    } else {
+      console.log("Created database");
+    }
+  });
+}
+
+// called to create user profile table if needed
+function createUserTable() {
+  // explicitly declaring the rowIdNum protects rowids from changing if the 
+  // table is compacted; not an issue here, but good practice
+  const cmd = 'CREATE TABLE UserTable (userId INTEGER PRIMARY KEY, firstName TEXT)';
   db.run(cmd, function(err, val) {
     if (err) {
       console.log("Database creation failure",err.message);
