@@ -29,6 +29,7 @@ const deletePrevPlannedDB = "DELETE FROM ActivityTable WHERE amount < 0 and date
 const getMostRecentPrevPlannedDB = "SELECT rowIdNum, activity, MAX(date), amount FROM ActivityTable WHERE amount <= 0 and date BETWEEN ? and ?";
 const getMostRecentDB = "SELECT MAX(rowIdNum), activity, date, amount FROM ActivityTable";
 const getPastWeekByActivityDB = "SELECT * FROM ActivityTable WHERE activity = ? and date BETWEEN ? and ? ORDER BY date ASC";
+const insertUserCMD = "INSERT OR IGNORE into UserTable (userId, firstName) values (?,?)";
 
 // Testing function loads some data into DB. 
 // Is called when app starts up to put fake 
@@ -109,6 +110,19 @@ async function testDB () {
   // get multiple items as a list
   result = await db.all(allDB,["walk"]);
   console.log("sample multiple db result",result);
+}
+
+/**
+ * Inserts User info into profiles table.
+ * @param {userID} id
+ * @param {string} firstName
+ */
+async function insertUser(userId, firstName) {
+  try {
+    await db.run(insertUserCMD, [userId, firstName]);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 /**
