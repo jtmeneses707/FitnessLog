@@ -84,6 +84,11 @@ header h1 {
   align-self: flex-end;
 }
 
+#navLogo {
+  width: 200px;
+  align-self: flex-start;
+}
+
 /* || Container Styling */
 .main-container + .main-container {
   padding-top: 40px;
