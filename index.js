@@ -206,6 +206,16 @@ app.get('/week', isAuthenticated, async function (request, response, next) {
     response.send(data.reverse());
 });
 
+
+// Server responds to get req for first name.
+// Able to access data inside of req.user, which is set by deserializeUser. 
+app.get('/name', isAuthenticated, function(req, res, next){
+  console.log("Server received req for name at", req.url);
+  console.log("Name is", req.user.firstName);
+  res.send(req.user.firstName);
+});
+
+
 // Server responds to logout request.
 app.get('/logout', isAuthenticated, function (req, res, next) {
     console.log("Server received log out request at", req.url);
@@ -257,6 +267,8 @@ function isAuthenticated(req, res, next) {
         // user field is filled in in request object
         // so user must be logged in! 
         console.log("user", req.user, "is logged in");
+        // let d = req.user;
+        // console.log(d.firstName);
         next();
     } else {
         res.redirect('/splash.html');  // send response telling
@@ -283,6 +295,7 @@ async function gotProfile(accessToken, refreshToken, profile, done) {
     // Get first name from data given by google.
     let firstName = profile.name.givenName;
     console.log("First name is: "+  firstName);
+    userid = parseInt(userid);
 
     // Check and insert if user not in DB already
     await dbo.insertUser(userid, firstName);
@@ -303,12 +316,20 @@ passport.serializeUser((userid, done) => {
 // Where we should lookup user database info. 
 // Whatever we pass in the "done" callback becomes req.user
 // and can be used by subsequent middleware.
-passport.deserializeUser((userid, done) => {
+passport.deserializeUser(async (userid, done) => {
     console.log("deserializeUser. Input is:", userid);
+    // let userData = await dbo.getUser(userid)
+    let userData = await dbo.getUser(userid);
+
+    // Code for debugging and seeing all users in DB.
+    // let allUsers = await dbo.getAllUser();
+    // console.log("All users, ", allUsers);
+
+
     // here is a good place to look up user data in database using
     // dbRowID. Put whatever you want into an object. It ends up
     // as the property "user" of the "req" object. 
-    let userData = { userData: "data from user's db row goes here" };
+    // let userData = { userData: "data from user's db row goes here" };
     done(null, userData);
 });
 
