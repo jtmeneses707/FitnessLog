@@ -206,9 +206,16 @@ app.get('/week', isAuthenticated, async function (request, response, next) {
     response.send(data.reverse());
 });
 
+// Server responds to logout request.
+app.get('/logout', isAuthenticated, function(req, res, next) {
+  console.log("Server received log out request at", req.url);
+  req.logout();
+  res.redirect('/');
+});
 
 
 
+// Example for query code.
 // next, put all queries (like store or reminder ... notice the isAuthenticated 
 // middleware function; queries are only handled if the user is logged in
 app.get('/query', isAuthenticated,
