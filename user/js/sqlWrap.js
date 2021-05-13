@@ -36,7 +36,7 @@ db.get(cmdUser, function (err, val) {
 function createActivityTable() {
   // explicitly declaring the rowIdNum protects rowids from changing if the 
   // table is compacted; not an issue here, but good practice
-  const cmd = 'CREATE TABLE ActivityTable (rowIdNum INTEGER PRIMARY KEY, activity TEXT, date INTEGER, amount FLOAT)';
+  const cmd = 'CREATE TABLE ActivityTable (rowIdNum INTEGER PRIMARY KEY, userID TEXT,  activity TEXT, date INTEGER, amount FLOAT)';
   db.run(cmd, function(err, val) {
     if (err) {
       console.log("Database creation failure",err.message);
@@ -50,7 +50,7 @@ function createActivityTable() {
 function createUserTable() {
   // explicitly declaring the rowIdNum protects rowids from changing if the 
   // table is compacted; not an issue here, but good practice
-  const cmd = 'CREATE TABLE UserTable (userId INTEGER PRIMARY KEY, firstName TEXT)';
+  const cmd = 'CREATE TABLE UserTable (rowIdNum INTEGER PRIMARY KEY, userID TEXT,  firstName TEXT)';
   db.run(cmd, function(err, val) {
     if (err) {
       console.log("Database creation failure",err.message);

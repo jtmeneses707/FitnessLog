@@ -140,7 +140,8 @@ app.post('/store', isAuthenticated,
         console.log("Server recieved a post request at", request.url);
 
         let activity = act.Activity(request.body)
-        await dbo.post_activity(activity)
+        console.log("activity", activity);
+        await dbo.post_activity(activity, request.user.userID)
 
         response.send({ message: "I got your POST request" });
     });
@@ -153,8 +154,8 @@ app.get('/reminder', isAuthenticated,
         currTime = (new Date()).getTime()
 
         // Get Most Recent Past Planned Activity and Delete All Past Planned Activities
-        let result = await dbo.get_most_recent_planned_activity_in_range(0, currTime)
-        await dbo.delete_past_activities_in_range(0, currTime);
+        let result = await dbo.get_most_recent_planned_activity_in_range(0, currTime, request.user.userID)
+        await dbo.delete_past_activities_in_range(0, currTime, request.user.userID);
 
         if (result != null) {
             // Format Activity Object Properly
@@ -178,7 +179,7 @@ app.get('/week', isAuthenticated, async function (request, response, next) {
 
     /* Get Latest Activity in DB if not provided by query params */
     if (activity === undefined) {
-        let result = await dbo.get_most_recent_entry()
+        let result = await dbo.get_most_recent_entry(request.user.userID)
         try {
             activity = result.activity
         } catch (error) {
@@ -189,7 +190,7 @@ app.get('/week', isAuthenticated, async function (request, response, next) {
     /* Get Activity Data for current Date and The Week Prior */
     let min = date - 6 * MS_IN_DAY
     let max = date
-    let result = await dbo.get_similar_activities_in_range(activity, min, max)
+    let result = await dbo.get_similar_activities_in_range(activity, min, max, request.user.userID)
 
     /* Store Activity amounts in Buckets, Ascending by Date */
     let data = Array.from({ length: 7 }, (_, i) => {
@@ -296,7 +297,7 @@ async function gotProfile(accessToken, refreshToken, profile, done) {
     // Get first name from data given by google.
     let firstName = profile.name.givenName;
     console.log("First name is: "+  firstName);
-    userid = parseInt(userid);
+    // userid = parseInt(userid);
 
     // Check and insert if user not in DB already
     await dbo.insertUser(userid, firstName);
@@ -320,6 +321,8 @@ passport.serializeUser((userid, done) => {
 passport.deserializeUser(async (userid, done) => {
     console.log("deserializeUser. Input is:", userid);
     // let userData = await dbo.getUser(userid)
+
+    // gets user profile data corresponding to the current user id.
     let userData = await dbo.getUser(userid);
 
     // Code for debugging and seeing all users in DB.

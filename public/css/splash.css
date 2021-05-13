@@ -142,12 +142,44 @@ label {
   .blackTile {
     height: 60%;
   }
+
+   .blackTile > h1 {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-size: 1.2rem;
+  }
   .whiteTile {
     height: 40%;
   }
 
   .welcomeContainer {
+    width: 200px;
+    margin-top: -80px;
+  }
+
+  .login {
+    width: 200px;
+  }
+
+  .login > a {
+    font-size: 1rem;
+  }
+
+  .login > img {
+    margin-right: 5px;
+  }
+
+  label {
+    font-size: 1.2rem;
+  }
+
+}
+
+@media screen and (max-height: 850px) {
+  .logoContainer {
     width: 250px;
   }
+
+
 
 }
